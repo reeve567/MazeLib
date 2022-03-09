@@ -2,6 +2,10 @@ package dev.reeve.mazelib
 
 import java.util.Objects
 
+/**
+ * A simple object to store location
+ * @see MazePoint
+ */
 class MazePosition(val x: Int, val y: Int) : Cloneable {
 	fun inDirection(direction: MazeDirection): MazePosition {
 		return MazePosition(x + direction.x, y + direction.y)

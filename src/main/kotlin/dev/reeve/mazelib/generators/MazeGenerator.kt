@@ -5,11 +5,19 @@ import dev.reeve.mazelib.MazeDirection
 import dev.reeve.mazelib.MazeDirection.Companion.getDirections
 import dev.reeve.mazelib.MazeMask
 import dev.reeve.mazelib.MazePosition
+import dev.reeve.mazelib.solvers.MazeSolver
 import kotlin.random.Random
 
+/**
+ * The base class for a generating algorithm
+ * @see MazeSolver
+ */
 abstract class MazeGenerator(protected val random: Random) {
 	abstract fun generateMaze(sizeX: Int, sizeY: Int): Maze
 	
+	/**
+	 * Checks all tiles within bounds and returns one (set or not)
+	 */
 	protected fun randomPosition(sizeX: Int, sizeY: Int, mask: MazeMask): MazePosition {
 		var found: MazePosition
 		do {

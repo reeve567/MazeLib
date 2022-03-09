@@ -1,42 +1,66 @@
 package dev.reeve.mazelib
 
-import java.util.ArrayList
-import java.util.Arrays
+import dev.reeve.mazelib.solvers.RecursiveBacktrackSolver
+import java.util.*
 
 /**
- * A single point in the maze, which can be represented by a square with open sides.
+ * A single point in the maze, which can be represented by a square with certain sides open.
+ * Different from a [MazePosition], as it stores the sides, whereas this also stores the [MazePosition]
  * The sides of the point, true = open wall, false = closed.
  * @param updateOrder This field is mostly just used for displaying purposes, but is useful for [RecursiveBacktrackSolver]
+ * @param sides If manually provided, it is required that the length of the array is 4 (hexagon grids & all coming soon hopefully?)
+ * @see MazePosition
  */
 class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: BooleanArray = booleanArrayOf(false, false, false, false)) {
-	
 	init {
 		require(sides.size == 4) { "Incorrect number of sides, expecting 4, got " + sides.size }
 	}
 	
+	/**
+	 * Just like the primary, just names all the sides.
+	 * Sides first
+	 */
 	constructor(east: Boolean, south: Boolean, west: Boolean, north: Boolean, position: MazePosition, updateOrder: Int)
 			: this(position, updateOrder, booleanArrayOf(east, south, west, north))
 	
+	/**
+	 * Just like the primary, just names all the sides.
+	 * Sides last
+	 */
+	constructor(position: MazePosition, updateOrder: Int, east: Boolean, south: Boolean, west: Boolean, north: Boolean)
+			: this(east, south, west, north, position, updateOrder)
+	
 	var east: Boolean
 		get() = sides[0]
-		set(value) { sides[0] = value }
+		set(value) {
+			sides[0] = value
+		}
 	var south: Boolean
 		get() = sides[1]
-		set(value) { sides[1] = value }
+		set(value) {
+			sides[1] = value
+		}
 	var west: Boolean
 		get() = sides[2]
-		set(value) { sides[2] = value }
+		set(value) {
+			sides[2] = value
+		}
 	var north: Boolean
 		get() = sides[3]
-		set(value) { sides[3] = value }
+		set(value) {
+			sides[3] = value
+		}
 	
-	fun openSides(): Array<MazeDirection> {
-		val directions = ArrayList<MazeDirection>()
-		if (north) directions.add(MazeDirection.NORTH)
-		if (south) directions.add(MazeDirection.SOUTH)
+	/**
+	 * Gives you which sides are open, using the [MazeDirection] enum instead of booleans.
+	 */
+	fun openSides(): Set<MazeDirection> {
+		val directions = mutableSetOf<MazeDirection>()
 		if (east) directions.add(MazeDirection.EAST)
+		if (south) directions.add(MazeDirection.SOUTH)
 		if (west) directions.add(MazeDirection.WEST)
-		return directions.toTypedArray()
+		if (north) directions.add(MazeDirection.NORTH)
+		return directions
 	}
 	
 	override fun toString(): String {
@@ -65,10 +89,16 @@ class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: Boo
 		return result
 	}
 	
+	/**
+	 * Sets the wall in the provided direction to be open
+	 */
 	fun setOpen(direction: MazeDirection) {
 		sides[direction.ordinal] = true
 	}
 	
+	/**
+	 * Sets the wall opposite the provided direction to be open
+	 */
 	fun setOppositeOpen(direction: MazeDirection) {
 		var index = direction.ordinal + 2
 		if (index >= MazeDirection.values().size) {

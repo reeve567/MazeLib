@@ -4,7 +4,7 @@ import dev.reeve.mazelib.*
 import kotlin.random.Random
 
 /**
- * Similar to the binary tree algorithm, except it only has one clear row at the top, and a bias only up.
+ * Similar to [BinaryTreeGenerator], except it only has one clear row at the top, and a bias only up.
  * Only has one exit north for each area of a row, so it may be more useful to try going the opposite direction, where there could be as many as sizeY exits from the row.
  */
 class SidewinderGenerator(random: Random = Random) : MazeGenerator(random) {

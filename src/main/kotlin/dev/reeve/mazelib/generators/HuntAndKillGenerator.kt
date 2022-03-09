@@ -7,7 +7,7 @@ import kotlin.random.Random
 
 /**
  * Generate a maze with a random walk, and then looping over all cells when it runs out.
- * @param mask Passed to [Maze]
+ * @param mask [Maze.mask]
  */
 class HuntAndKillGenerator(var mask: MazeMask = { false }, random: Random = Random) : MazeGenerator(random) {
 	override fun generateMaze(sizeX: Int, sizeY: Int): Maze {

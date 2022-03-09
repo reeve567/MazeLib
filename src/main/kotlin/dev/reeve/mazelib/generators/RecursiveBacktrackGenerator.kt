@@ -2,11 +2,13 @@ package dev.reeve.mazelib.generators
 
 import dev.reeve.mazelib.*
 import dev.reeve.mazelib.solvers.IncompleteMazeException
+import dev.reeve.mazelib.solvers.RecursiveBacktrackSolver
 import kotlin.random.Random
 
 /**
  * Generate a maze with a random walk, and backtracking when it finds a dead end.
- * @param mask Passed to [Maze]
+ * @param mask [Maze.mask]
+ * @see HuntAndKillGenerator
  */
 class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random = Random) : MazeGeneratorWithSolution(random) {
 	override fun generateMaze(sizeX: Int, sizeY: Int): Maze {
@@ -54,6 +56,9 @@ class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random
 		return maze to path
 	}
 	
+	/**
+	 * This may add bias around the [start], so it may be worthwhile to instead use [RecursiveBacktrackSolver]
+	 */
 	override fun generateMaze(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition): Pair<Maze, MazePath> {
 		return generate(sizeX, sizeY, start, end).let { it.first to (it.second ?: throw IncompleteMazeException("Couldn't complete path")) }
 	}

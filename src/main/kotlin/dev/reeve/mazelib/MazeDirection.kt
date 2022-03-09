@@ -4,7 +4,8 @@ import dev.reeve.mazelib.MazeDirection
 import java.util.ArrayList
 
 /**
- * Order is starting at EAST, and going clockwise.
+ * The directions you can look at neighbors with using things like [MazePosition.inDirection]
+ * Order is starting at EAST, and going clockwise (ordinal of these are very important to a few functions like [MazePoint.setOppositeOpen].
  */
 enum class MazeDirection(val x: Int, val y: Int) {
 	EAST(1, 0), SOUTH(0, 1), WEST(-1, 0), NORTH(0, -1);
