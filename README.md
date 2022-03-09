@@ -1,5 +1,5 @@
 # MazeLib
-A library for the JVM for maze algorithms
+A library for the JVM for maze algorithms (as of now, all generators are for perfect mazes, meaning no detached walls or loops)
 
 A neat little library I plan to upkeep in my free time, as I learn about different maze algorithms
 
