@@ -1,0 +1,8 @@
+When it comes to maze generators, some are better for certain applications.
+
+Some available ones:
+- Sidewinder (Upward bias, y = 0) (~25% dead ends)
+- RecursiveBacktrack (Unbiased, more memory needed) (~10% dead ends)
+- *HuntAndKill (Unbiased, more time needed) (~10% dead ends)
+
+*Unimplemented

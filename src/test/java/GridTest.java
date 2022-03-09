@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class GridTest extends JFrame {
 	
-	private final int size = 5;
+	private final int size = 10;
 	
 	GridTest() {
 		setSize(700, 700);
@@ -44,7 +44,7 @@ public class GridTest extends JFrame {
 				
 				g.drawString("" + point.getUpdateOrder(), x * squareSize + (squareSize / 3), buffer + y * squareSize + (squareSize / 2));
 				
-				if (point.isNorthOpen()) {
+				if (point.getNorth()) {
 					//g.setColor(Color.GREEN);
 				} else {
 					g.setColor(Color.BLACK);
@@ -53,7 +53,7 @@ public class GridTest extends JFrame {
 				}
 				
 				
-				if (point.isWestOpen()) {
+				if (point.getWest()) {
 					//g.setColor(Color.GREEN);
 				} else {
 					g.setColor(Color.BLACK);
@@ -61,7 +61,7 @@ public class GridTest extends JFrame {
 				}
 				
 				
-				if (point.isSouthOpen()) {
+				if (point.getSouth()) {
 					g.setColor(Color.GREEN);
 				} else {
 					g.setColor(Color.BLACK);
@@ -69,7 +69,7 @@ public class GridTest extends JFrame {
 				}
 				
 				
-				if (point.isEastOpen()) {
+				if (point.getEast()) {
 					g.setColor(Color.GREEN);
 				} else {
 					g.setColor(Color.BLACK);

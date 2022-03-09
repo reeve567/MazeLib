@@ -1,42 +1,50 @@
 plugins {
-    java
-    `maven-publish`
+	java
+	`maven-publish`
+	id("com.github.johnrengelman.shadow") version "6.1.0"
+	kotlin("jvm") version "1.6.10"
 }
 
 group = "dev.reeve"
-version = "latest"
+version = "1.0.2"
+
+val user = properties["user"]
+val key = properties["key"]
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
-    
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+	testImplementation("junit:junit:4.13.2")
 }
 
 tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/dapper-fox-studios/bdungeons")
-        }
-    }
-    
-    publications {
-        create<MavenPublication>("main") {
-            groupId = group as String
-            artifactId = "MazeLib"
-            version = "1.0"
-            
-            from(components["java"])
-        }
-    }
+	repositories {
+		maven {
+			name = "GithubPackages"
+			url = uri("https://maven.pkg.github.com/reeve567/mazelib")
+			
+			credentials {
+				username = user.toString()
+				password = key.toString()
+			}
+		}
+	}
+	
+	publications {
+		create<MavenPublication>("main") {
+			//groupId = project.group.toString()
+			//artifactId = "MazeLib"
+			//version = project.version.toString()
+			
+			//println("$groupId/$artifactId/$version")
+			
+			from(components["kotlin"])
+		}
+	}
 }
