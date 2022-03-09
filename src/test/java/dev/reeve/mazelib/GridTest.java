@@ -31,6 +31,7 @@ public class GridTest extends JFrame {
 		/*Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535)).generateMaze(size, size);
 		MazePath path = new MazePath();*/
 		
+		// Replace with `Random.Default` to let the seed be different each time
 		Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, Random(12353)).generateMaze(size, size);
 		MazePath path = new MazePath();
 		
