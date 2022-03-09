@@ -3,7 +3,7 @@ A library for the JVM for maze algorithms
 
 A neat little library I plan to upkeep in my free time, as I learn about different maze algorithms
 
-As of now, there are two algorithms:
+As of now, there are four algorithms:
 * BinaryTree (North-Eastern bias, y = 0 & x = max - 1) (~25% dead ends)
 * Sidewinder (Upward bias, y = 0) (~25% dead ends)
 * RecursiveBacktrack (Unbiased, more memory needed `vs HuntAndKill`) (~10% dead ends)
