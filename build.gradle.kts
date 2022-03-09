@@ -38,11 +38,9 @@ publishing {
 	
 	publications {
 		create<MavenPublication>("main") {
-			//groupId = project.group.toString()
-			//artifactId = "MazeLib"
-			//version = project.version.toString()
-			
-			//println("$groupId/$artifactId/$version")
+			groupId = project.group.toString()
+			artifactId = "mazelib"
+			version = project.version.toString()
 			
 			from(components["kotlin"])
 		}
