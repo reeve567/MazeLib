@@ -3,11 +3,11 @@ A library for the JVM for maze algorithms
 
 A neat little library I plan to upkeep in my free time, as I learn about different maze algorithms
 
-As of now, there are four algorithms:
-* BinaryTree (North-Eastern bias, y = 0 & x = max - 1) (~25% dead ends)
-* Sidewinder (Upward bias, y = 0) (~25% dead ends)
-* RecursiveBacktrack (Unbiased, more memory needed `vs HuntAndKill`) (~10% dead ends)
-* HuntAndKill (Unbiased, more time needed `vs RecursiveBacktrack`) (~10% dead ends)
+As of now, there are four algorithms (Generator/Solver):
+* (G)   BinaryTree (North-Eastern bias, y = 0 & x = max - 1) (~25% dead ends)
+* (G)   Sidewinder (Upward bias, y = 0) (~25% dead ends)
+* (G/S) RecursiveBacktrack (Unbiased, more memory needed `vs HuntAndKill`) (~10% dead ends)
+* (G)   HuntAndKill (Unbiased, more time needed `vs RecursiveBacktrack`) (~10% dead ends)
 
 A little visual demo is provided in the tests dir (java/dev.reeve.mazelib/GridTest). It uses RecursiveBacktrack by default, but it's trivial to switch to another.
 
