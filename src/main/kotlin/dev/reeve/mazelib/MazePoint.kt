@@ -6,6 +6,7 @@ import java.util.Arrays
 /**
  * A single point in the maze, which can be represented by a square with open sides.
  * The sides of the point, true = open wall, false = closed.
+ * @param updateOrder This field is mostly just used for displaying purposes, but is useful for [RecursiveBacktrackSolver]
  */
 class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: BooleanArray = booleanArrayOf(false, false, false, false)) {
 	

@@ -32,7 +32,7 @@ public class GridTest extends JFrame {
 		/*Maze maze = new BinaryTreeGenerator(Random(12353)).generateMaze(size, size);
 		MazePath path = new MazePath();*/
 		
-		// Replace with `Random.Default` to let the seed be different each time
+		// Replace with `Random.Default` to let the seed be different each time or leave all blank
 		Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, Random(12353)).generateMaze(size, size);
 		MazePath path = new MazePath();
 		

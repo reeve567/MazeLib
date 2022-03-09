@@ -8,7 +8,7 @@ import kotlin.random.Random
  * Generate a maze with a random walk, and backtracking when it finds a dead end.
  * @param mask Passed to [Maze]
  */
-class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random) : MazeGeneratorWithSolution(random) {
+class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random = Random) : MazeGeneratorWithSolution(random) {
 	override fun generateMaze(sizeX: Int, sizeY: Int): Maze {
 		return generate(sizeX, sizeY, randomPosition(sizeX, sizeY, mask), null).first
 	}
