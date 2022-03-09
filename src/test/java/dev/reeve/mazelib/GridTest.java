@@ -38,7 +38,6 @@ public class GridTest extends JFrame {
 				// square size = 30
 				MazePoint point = maze.getPoints()[x][y];
 				int corner = 3;
-				System.out.println(point);
 				
 				if (point == null) {
 					g.setColor(Color.MAGENTA);
