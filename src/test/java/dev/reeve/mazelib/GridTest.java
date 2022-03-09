@@ -1,5 +1,6 @@
 package dev.reeve.mazelib;
 
+import dev.reeve.mazelib.generators.BinaryTreeGenerator;
 import dev.reeve.mazelib.generators.RecursiveBacktrackGenerator;
 
 import javax.swing.*;
@@ -28,7 +29,7 @@ public class GridTest extends JFrame {
 		Maze maze = generated.getFirst();
 		MazePath path = generated.getSecond();*/
 		
-		/*Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535)).generateMaze(size, size);
+		/*Maze maze = new BinaryTreeGenerator(Random(12353)).generateMaze(size, size);
 		MazePath path = new MazePath();*/
 		
 		// Replace with `Random.Default` to let the seed be different each time
