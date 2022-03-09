@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.reeve"
-version = "1.0.3"
+version = "1.0.4"
 
 val user = properties["user"]
 val key = properties["key"]

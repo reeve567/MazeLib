@@ -1,11 +1,12 @@
 package dev.reeve.mazelib;
 
 import dev.reeve.mazelib.generators.RecursiveBacktrackGenerator;
-import kotlin.Pair;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+
+import static kotlin.random.RandomKt.Random;
+
 
 public class GridTest extends JFrame {
 	
@@ -22,13 +23,16 @@ public class GridTest extends JFrame {
 	
 	@Override
 	public void paint(Graphics g) {
-		Pair<Maze, MazePath> generated = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535))
+		/*Pair<Maze, MazePath> generated = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535))
 				.generateMaze(size, size, new MazePosition(0, 0), new MazePosition(size - 1, size - 1));
 		Maze maze = generated.getFirst();
-		MazePath path = generated.getSecond();
+		MazePath path = generated.getSecond();*/
 		
 		/*Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535)).generateMaze(size, size);
 		MazePath path = new MazePath();*/
+		
+		Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, Random(12353)).generateMaze(size, size);
+		MazePath path = new MazePath();
 		
 		int squareSize = 30;
 		int buffer = 50;

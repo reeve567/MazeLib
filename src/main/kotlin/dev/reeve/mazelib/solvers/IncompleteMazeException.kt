@@ -1,3 +1,3 @@
 package dev.reeve.mazelib.solvers
 
-class IncompleteMazeException: IllegalArgumentException()
+class IncompleteMazeException(string: String): IllegalArgumentException(string)

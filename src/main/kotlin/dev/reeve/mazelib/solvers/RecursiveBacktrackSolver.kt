@@ -10,7 +10,7 @@ class RecursiveBacktrackSolver : MazeSolver() {
 		
 		while (path.peek() != end) {
 			val currentPos = path.peek()
-			val open = maze.getPoint(currentPos)?.openSides() ?: throw IncompleteMazeException()
+			val open = maze.getPoint(currentPos)?.openSides() ?: throw IncompleteMazeException("$currentPos")
 			
 			if (open.isEmpty()) {
 				path.pop()

@@ -7,14 +7,14 @@ import java.util.Arrays
  * A single point in the maze, which can be represented by a square with open sides.
  * The sides of the point, true = open wall, false = closed.
  */
-class MazePoint(val sides: BooleanArray = booleanArrayOf(false, false, false, false), val position: MazePosition, var updateOrder: Int) {
+class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: BooleanArray = booleanArrayOf(false, false, false, false)) {
 	
 	init {
 		require(sides.size == 4) { "Incorrect number of sides, expecting 4, got " + sides.size }
 	}
 	
 	constructor(east: Boolean, south: Boolean, west: Boolean, north: Boolean, position: MazePosition, updateOrder: Int)
-			: this(booleanArrayOf(east, south, west, north), position, updateOrder)
+			: this(position, updateOrder, booleanArrayOf(east, south, west, north))
 	
 	var east: Boolean
 		get() = sides[0]
@@ -62,5 +62,17 @@ class MazePoint(val sides: BooleanArray = booleanArrayOf(false, false, false, fa
 		result = 31 * result + position.hashCode()
 		result = 31 * result + updateOrder
 		return result
+	}
+	
+	fun setOpen(direction: MazeDirection) {
+		sides[direction.ordinal] = true
+	}
+	
+	fun setOppositeOpen(direction: MazeDirection) {
+		var index = direction.ordinal + 2
+		if (index >= MazeDirection.values().size) {
+			index -= MazeDirection.values().size
+		}
+		sides[index] = true
 	}
 }

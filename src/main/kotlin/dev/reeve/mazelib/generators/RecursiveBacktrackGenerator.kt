@@ -2,15 +2,15 @@ package dev.reeve.mazelib.generators
 
 import dev.reeve.mazelib.*
 import dev.reeve.mazelib.solvers.IncompleteMazeException
-import java.util.*
+import kotlin.random.Random
 
 /**
  * Generate a maze with a random walk, and backtracking when it finds a dead end.
  * @param mask Passed to [Maze]
  */
-class RecursiveBacktrackGenerator(var mask: (MazePosition) -> Boolean = { false }, random: Random) : MazeGeneratorWithSolution(random) {
+class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random) : MazeGeneratorWithSolution(random) {
 	override fun generateMaze(sizeX: Int, sizeY: Int): Maze {
-		return generate(sizeX, sizeY, MazePosition(random.nextInt(sizeX), random.nextInt(sizeY)), null).first
+		return generate(sizeX, sizeY, randomPosition(sizeX, sizeY, mask), null).first
 	}
 	
 	private fun generate(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition?): Pair<Maze, MazePath?> {
@@ -21,25 +21,19 @@ class RecursiveBacktrackGenerator(var mask: (MazePosition) -> Boolean = { false 
 		var path: MazePath? = null
 		
 		while (run.isNotEmpty()) {
-			if (order > 1000) error("Maze took too many tries")
-			
 			val currentPos = run.peek()
-			val direction = generateDirection(maze, currentPos)
+			val direction = generateUnsetDirection(maze, currentPos)
 			
 			if (end != null && path == null && currentPos == end) {
 				path = (run.clone() as MazePath)
 			}
 			
-			val point = maze.getPoint(currentPos)?.also {
-				if (!maze.isPointSet(currentPos))
-					it.updateOrder = order++
-			} ?: MazePoint(position = currentPos, updateOrder = order++)
-			
-			if (!maze.isPointSet(currentPos)) {
-				maze.setPoint(point)
-				
+			var new = false
+			val point = maze.getPointOrNew(currentPos, -1) {
+				it.updateOrder = order++
+				new = true
 				if (last != null) {
-					maze.setOppositeOpen(point, last)
+					it.setOppositeOpen(last!!)
 				}
 			}
 			
@@ -48,7 +42,10 @@ class RecursiveBacktrackGenerator(var mask: (MazePosition) -> Boolean = { false 
 				continue
 			}
 			
-			maze.setOpen(point, direction)
+			if (!new)
+				point.updateOrder = order++
+			
+			point.setOpen(direction)
 			
 			last = direction
 			run.add(currentPos.inDirection(direction))
@@ -58,6 +55,6 @@ class RecursiveBacktrackGenerator(var mask: (MazePosition) -> Boolean = { false 
 	}
 	
 	override fun generateMaze(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition): Pair<Maze, MazePath> {
-		return generate(sizeX, sizeY, start, end).let { it.first to (it.second ?: throw IncompleteMazeException()) }
+		return generate(sizeX, sizeY, start, end).let { it.first to (it.second ?: throw IncompleteMazeException("Couldn't complete path")) }
 	}
 }
