@@ -45,4 +45,22 @@ class MazePoint(val sides: BooleanArray = booleanArrayOf(false, false, false, fa
 				", updateOrder=" + updateOrder +
 				'}'
 	}
+	
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (other !is MazePoint) return false
+		
+		if (!sides.contentEquals(other.sides)) return false
+		if (position != other.position) return false
+		if (updateOrder != other.updateOrder) return false
+		
+		return true
+	}
+	
+	override fun hashCode(): Int {
+		var result = sides.contentHashCode()
+		result = 31 * result + position.hashCode()
+		result = 31 * result + updateOrder
+		return result
+	}
 }

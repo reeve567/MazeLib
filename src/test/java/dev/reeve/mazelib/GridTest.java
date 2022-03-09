@@ -1,6 +1,7 @@
-import dev.reeve.mazelib.Maze;
-import dev.reeve.mazelib.MazePoint;
+package dev.reeve.mazelib;
+
 import dev.reeve.mazelib.generators.RecursiveBacktrackGenerator;
+import kotlin.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +22,14 @@ public class GridTest extends JFrame {
 	
 	@Override
 	public void paint(Graphics g) {
-		Maze maze = new RecursiveBacktrackGenerator(new Random(12535)).generateMaze(size, size);
+		Pair<Maze, MazePath> generated = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535))
+				.generateMaze(size, size, new MazePosition(0, 0), new MazePosition(size - 1, size - 1));
+		Maze maze = generated.getFirst();
+		MazePath path = generated.getSecond();
+		
+		/*Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, new Random(12535)).generateMaze(size, size);
+		MazePath path = new MazePath();*/
+		
 		int squareSize = 30;
 		int buffer = 50;
 		
@@ -29,7 +37,8 @@ public class GridTest extends JFrame {
 			for (int y = 0; y < size; y++) {
 				// square size = 30
 				MazePoint point = maze.getPoints()[x][y];
-				int corner = 2;
+				int corner = 3;
+				System.out.println(point);
 				
 				if (point == null) {
 					g.setColor(Color.MAGENTA);
@@ -37,7 +46,12 @@ public class GridTest extends JFrame {
 					continue;
 				}
 				
-				g.setColor(Color.WHITE);
+				MazePosition position = new MazePosition(x, y);
+				
+				if (path.contains(position))
+					g.setColor(Color.GREEN);
+				else
+					g.setColor(Color.WHITE);
 				g.fillRect(x * squareSize, buffer + y * squareSize, squareSize, squareSize);
 				g.setColor(Color.BLACK);
 				g.drawRect(x * squareSize, buffer + y * squareSize, squareSize, squareSize);
@@ -52,7 +66,6 @@ public class GridTest extends JFrame {
 					
 				}
 				
-				
 				if (point.getWest()) {
 					//g.setColor(Color.GREEN);
 				} else {
@@ -60,14 +73,12 @@ public class GridTest extends JFrame {
 					g.fillRect(x * squareSize, buffer + (y * squareSize) + corner, corner, squareSize - (2 * corner));
 				}
 				
-				
 				if (point.getSouth()) {
 					g.setColor(Color.GREEN);
 				} else {
 					g.setColor(Color.BLACK);
 					g.fillRect((x * squareSize) + corner, buffer + (y * squareSize) + (squareSize - corner), squareSize - (2 * corner), corner);
 				}
-				
 				
 				if (point.getEast()) {
 					g.setColor(Color.GREEN);

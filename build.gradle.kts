@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.reeve"
-version = "1.0.2"
+version = "1.0.3"
 
 val user = properties["user"]
 val key = properties["key"]
@@ -16,7 +16,8 @@ repositories {
 }
 
 dependencies {
-	testImplementation("junit:junit:4.13.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 }
 
 tasks.getByName<Test>("test") {

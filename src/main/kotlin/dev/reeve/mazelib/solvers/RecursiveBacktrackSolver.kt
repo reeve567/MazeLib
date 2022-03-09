@@ -3,9 +3,8 @@ package dev.reeve.mazelib.solvers
 import dev.reeve.mazelib.Maze
 import dev.reeve.mazelib.MazePath
 import dev.reeve.mazelib.MazePosition
-import java.util.*
 
-class RecursiveBacktrackSolver(private val random: Random) : MazeSolver() {
+class RecursiveBacktrackSolver : MazeSolver() {
 	override fun generatePath(maze: Maze, start: MazePosition, end: MazePosition): MazePath {
 		val path = MazePath()
 		

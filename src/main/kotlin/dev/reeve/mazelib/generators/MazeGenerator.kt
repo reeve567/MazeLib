@@ -7,7 +7,7 @@ import dev.reeve.mazelib.MazeDirection
 import java.util.*
 
 abstract class MazeGenerator(protected val random: Random) {
-	abstract fun generateMaze(sizeX: Int, sizeY: Int): Maze?
+	abstract fun generateMaze(sizeX: Int, sizeY: Int): Maze
 	protected fun generateDirection(maze: Maze, position: MazePosition): MazeDirection? {
 		// check to make sure they aren't in the right-most row and that the cell to the right isn't already set
 		val east = !maze.isPointSet(position.inDirection(MazeDirection.EAST))
