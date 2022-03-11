@@ -1,7 +1,8 @@
 package dev.reeve.mazelib;
 
 import dev.reeve.mazelib.generators.BinaryTreeGenerator;
-import dev.reeve.mazelib.generators.RecursiveBacktrackGenerator;
+import dev.reeve.mazelib.generators.SidewinderGenerator;
+import kotlin.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,12 +30,12 @@ public class GridTest extends JFrame {
 		Maze maze = generated.getFirst();
 		MazePath path = generated.getSecond();*/
 		
-		/*Maze maze = new BinaryTreeGenerator(Random(12353)).generateMaze(size, size);
-		MazePath path = new MazePath();*/
+		Maze maze = new SidewinderGenerator(Random(12353)).generateMaze(size, size);
+		MazePath path = new MazePath();
 		
 		// Replace with `Random.Default` to let the seed be different each time or leave all blank
-		Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, Random(12353)).generateMaze(size, size);
-		MazePath path = new MazePath();
+		/*Maze maze = new RecursiveBacktrackGenerator(mazePosition -> false, Random(12353)).generateMaze(size, size);
+		MazePath path = new MazePath();*/
 		
 		int squareSize = 30;
 		int buffer = 50;

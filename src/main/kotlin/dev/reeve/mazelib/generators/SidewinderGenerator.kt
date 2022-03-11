@@ -1,6 +1,9 @@
 package dev.reeve.mazelib.generators
 
-import dev.reeve.mazelib.*
+import dev.reeve.mazelib.Maze
+import dev.reeve.mazelib.MazeDirection
+import dev.reeve.mazelib.MazePath
+import dev.reeve.mazelib.MazePosition
 import kotlin.random.Random
 
 /**
@@ -14,19 +17,34 @@ class SidewinderGenerator(random: Random = Random) : MazeGenerator(random) {
 		var updateOrder = 0
 		val run = MazePath()
 		
-		for (x in 0 until sizeX) {
-			for (y in 0 until sizeY) {
+		for (y in 0 until sizeX) {
+			for (x in 0 until sizeY) {
 				val turnOrder = updateOrder++
-				val point = maze.getPointOrNew(MazePosition(x,y), turnOrder)
+				val point = maze.getPointOrNew(MazePosition(x, y), turnOrder)
 				run.add(point.position)
 				
-				if (y == 0 || (random.nextBoolean() && x != sizeX - 1))
+				if (x > 0) {
+					val prev = point.position.inDirection(MazeDirection.WEST)
+					val prevPoint = maze.getPoint(prev)
+					if (prevPoint!!.east)
+						point.setOpen(MazeDirection.WEST)
+				}
+				
+				if (y == 0 || (random.nextBoolean() && x != sizeX - 1)) {
 					point.setOpen(MazeDirection.EAST)
-				else {
+					
+					if (y == 0) {
+						run.clear()
+					}
+				} else {
 					// Should always be a valid point returned, since this algo starts at the north-most row
 					val northCarved = maze.getPointOrNew(run.random(), turnOrder)
 					northCarved.setOpen(MazeDirection.NORTH)
+					
 					run.clear()
+					
+					val northPoint = maze.getPoint(northCarved.position.inDirection(MazeDirection.NORTH))
+					northPoint!!.setOpen(MazeDirection.SOUTH)
 				}
 			}
 		}
