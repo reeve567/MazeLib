@@ -3,6 +3,11 @@ package dev.reeve.mazelib
 import java.util.*
 
 /**
+ * Allows you to create more dead ends in a maze under certain conditions, random by default, but you could just use 1 or 0 to make it do or don't respectively.
+ */
+typealias DeadEndMask = (MazePosition, order: Int) -> Double
+
+/**
  * Represents a mask that you can apply to shape the grid, for example, to cut out every square possible it'd just return `true`
  * @sample makeMask
  */

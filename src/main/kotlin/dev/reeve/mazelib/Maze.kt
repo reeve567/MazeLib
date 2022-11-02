@@ -12,7 +12,7 @@ import dev.reeve.mazelib.solvers.IncompleteMazeException
  * @see dev.reeve.mazelib.generators
  * @see dev.reeve.mazelib.solvers
  */
-class Maze(
+open class Maze(
 	private val sizeX: Int,
 	private val sizeY: Int,
 	private val mask: MazeMask = { false },

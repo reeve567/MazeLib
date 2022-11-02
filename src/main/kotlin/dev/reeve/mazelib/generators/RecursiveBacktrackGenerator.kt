@@ -12,10 +12,14 @@ import kotlin.random.Random
  */
 class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random = Random) : MazeGeneratorWithSolution(random) {
 	override fun generateMaze(sizeX: Int, sizeY: Int): Maze {
-		return generate(sizeX, sizeY, randomPosition(sizeX, sizeY, mask), null).first
+		return generate(sizeX, sizeY, randomPosition(sizeX, sizeY, mask), null, null).first
 	}
 	
-	private fun generate(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition?): Pair<Maze, MazePath?> {
+	private fun generateWithExtraDeadEnds(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition?, deadEndMask: DeadEndMask) {
+		
+	}
+	
+	private fun generate(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition?, deadEndMask: DeadEndMask?): Pair<Maze, MazePath?> {
 		val maze = Maze(sizeX, sizeY)
 		val run = MazePath(start)
 		var last: MazeDirection? = null
@@ -36,6 +40,12 @@ class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random
 				new = true
 				if (last != null) {
 					it.setOppositeOpen(last!!)
+				}
+			}
+			
+			if (deadEndMask != null && run.size > 1) {
+				if (run.size > (sizeX * sizeY) * 0.1) {
+					//if (deadEndMask.invoke(currentPos, order))
 				}
 			}
 			
@@ -60,6 +70,6 @@ class RecursiveBacktrackGenerator(var mask: MazeMask = { false }, random: Random
 	 * This may add bias around the [start], so it may be worthwhile to instead use [RecursiveBacktrackSolver]
 	 */
 	override fun generateMaze(sizeX: Int, sizeY: Int, start: MazePosition, end: MazePosition): Pair<Maze, MazePath> {
-		return generate(sizeX, sizeY, start, end).let { it.first to (it.second ?: throw IncompleteMazeException("Couldn't complete path")) }
+		return generate(sizeX, sizeY, start, end, null).let { it.first to (it.second ?: throw IncompleteMazeException("Couldn't complete path")) }
 	}
 }

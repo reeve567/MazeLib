@@ -11,7 +11,12 @@ import java.util.*
  * @param sides If manually provided, it is required that the length of the array is 4 (hexagon grids & all coming soon hopefully?)
  * @see MazePosition
  */
-class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: BooleanArray = booleanArrayOf(false, false, false, false)) {
+class MazePoint(
+	val position: MazePosition,
+	var updateOrder: Int,
+	var weight: Int = 0,
+	val sides: BooleanArray = booleanArrayOf(false, false, false, false)
+) {
 	init {
 		require(sides.size == 4) { "Incorrect number of sides, expecting 4, got " + sides.size }
 	}
@@ -20,15 +25,15 @@ class MazePoint(val position: MazePosition, var updateOrder: Int, val sides: Boo
 	 * Just like the primary, just names all the sides.
 	 * Sides first
 	 */
-	constructor(east: Boolean, south: Boolean, west: Boolean, north: Boolean, position: MazePosition, updateOrder: Int)
-			: this(position, updateOrder, booleanArrayOf(east, south, west, north))
+	constructor(east: Boolean, south: Boolean, west: Boolean, north: Boolean, position: MazePosition, updateOrder: Int, weight: Int)
+			: this(position, updateOrder, weight, booleanArrayOf(east, south, west, north))
 	
 	/**
 	 * Just like the primary, just names all the sides.
 	 * Sides last
 	 */
-	constructor(position: MazePosition, updateOrder: Int, east: Boolean, south: Boolean, west: Boolean, north: Boolean)
-			: this(east, south, west, north, position, updateOrder)
+	constructor(position: MazePosition, updateOrder: Int, east: Boolean, south: Boolean, west: Boolean, north: Boolean, weight: Int)
+			: this(east, south, west, north, position, updateOrder, weight)
 	
 	var east: Boolean
 		get() = sides[0]

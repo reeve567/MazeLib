@@ -1,15 +1,11 @@
 plugins {
-	java
 	`maven-publish`
 	id("com.github.johnrengelman.shadow") version "6.1.0"
-	kotlin("jvm") version "1.6.10"
+	kotlin("jvm") version "1.7.0"
 }
 
 group = "dev.reeve"
 version = "1.0.5"
-
-val user = properties["user"]
-val key = properties["key"]
 
 repositories {
 	mavenCentral()
@@ -25,25 +21,19 @@ tasks.getByName<Test>("test") {
 }
 
 publishing {
-	repositories {
-		maven {
-			name = "GithubPackages"
-			url = uri("https://maven.pkg.github.com/reeve567/mazelib")
-			
-			credentials {
-				username = user.toString()
-				password = key.toString()
-			}
-		}
-	}
-	
 	publications {
 		create<MavenPublication>("main") {
-			groupId = project.group.toString()
-			artifactId = "mazelib"
-			version = project.version.toString()
-			
 			from(components["kotlin"])
+			
+			repositories {
+				maven("https://repo.reeve.dev/repository/maven-releases/") {
+					name = "Nexus"
+					credentials {
+						username = System.getenv("NEXUS_REPO_USERNAME")
+						password = System.getenv("NEXUS_REPO_PASSWORD")
+					}
+				}
+			}
 		}
 	}
 }
